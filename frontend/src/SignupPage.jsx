@@ -15,7 +15,7 @@ function SignupPage() {
 
     const handleSignup = async () => {
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/signup`, {
+            const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/signup`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -34,7 +34,7 @@ function SignupPage() {
                 navigate("/")
             }
             else {
-                setMessage(data.error)
+                setMessage(data.message)
             }
         }
         catch {

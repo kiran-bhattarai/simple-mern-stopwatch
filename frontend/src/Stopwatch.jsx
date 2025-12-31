@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-
 function Stopwatch() {
 
     const navigate = useNavigate();
@@ -17,8 +15,10 @@ function Stopwatch() {
     const startTimeRef = useRef();
     const intervalIdref = useRef();
 
+    const [loading, setLoading] = useState(true);
+
     const logout = async () => {
-        await fetch(`${import.meta.env.VITE_API_BASE_URL}/logout`, {
+        await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/logout`, {
             method: "POST",
             credentials: "include",
         });
@@ -27,7 +27,7 @@ function Stopwatch() {
     }
 
     const sendTimestamp = async () => {
-        await fetch(`${import.meta.env.VITE_API_BASE_URL}/timestamps`, {
+        await fetch(`${import.meta.env.VITE_API_BASE_URL}/time/timestamps`, {
             method: "POST",
             credentials: "include",
             headers: {
@@ -43,7 +43,7 @@ function Stopwatch() {
     }, [])
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_BASE_URL}/check`, {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/check`, {
             method: "GET",
             credentials: "include",
         })
@@ -58,14 +58,16 @@ function Stopwatch() {
                 console.log(err);
                 navigate("/login")
             })
+            .finally(() => setLoading(false));
     }, [navigate])
 
+    
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_BASE_URL}/timestamps`, {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/time/timestamps`, {
             method: "GET",
             credentials: "include",
         })
-            .then(res => {
+        .then(res => {
                 if (!res.ok) throw new Error("Not authenticated")
                 return res.json();
             })
@@ -76,7 +78,7 @@ function Stopwatch() {
                 console.log(err)
             })
     }, [timesAdded])
-
+    
 
     useEffect(() => {
         if (isRunning) {
@@ -89,11 +91,11 @@ function Stopwatch() {
                 clearInterval(intervalIdref.current)
             )
         }
-
+        
     }, [isRunning])
 
     const deleteTimestamp = async (id) => {
-        await fetch(`${import.meta.env.VITE_API_BASE_URL}/timestamps/${id}`, {
+        await fetch(`${import.meta.env.VITE_API_BASE_URL}/time/timestamps/${id}`, {
             method: "DELETE",
             credentials: "include",
         });
@@ -103,6 +105,8 @@ function Stopwatch() {
         );
     };
 
+    if (loading) return null;
+    
     const start = () => {
         setIsRunning(true)
         startTimeRef.current = Date.now() - elapsedTime;

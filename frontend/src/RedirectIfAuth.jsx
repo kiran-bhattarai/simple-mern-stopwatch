@@ -5,7 +5,7 @@ function RedirectIfAuth({ children }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_API_BASE_URL}/check`, {
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/check`, {
             method: "GET",
             credentials: "include",
         })
@@ -14,10 +14,8 @@ function RedirectIfAuth({ children }) {
                 navigate("/");
             }
         })
-        .catch(err => {
-            console.log(err)
-        });
-    }, []);
+        .catch();
+    }, [navigate]);
 
     return children;
 }

@@ -14,7 +14,7 @@ function LoginPage() {
 
     const loginFunction = async () => {
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/login`, {
+            const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/login`, {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -23,6 +23,7 @@ function LoginPage() {
                 body: JSON.stringify({ username: userName, password: passWord })
             });
             const data = await res.json()
+            console.log(data)
 
             if (res.ok) {
                 setMessage(data.message)
@@ -31,7 +32,7 @@ function LoginPage() {
                 navigate("/")
             }
             else {
-                setMessage(data.error)
+                setMessage(data.message)
             }
         }
         catch (err) {
