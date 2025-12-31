@@ -1,6 +1,6 @@
 # Simple MERN Stopwatch App
 
-This is a **learning project** I made to get better at MERN stack. I experimented with authentication, JWT tokens, rate limiting, protected routes, MongoDB, CRUD, and mapping backend data to frontend lists.
+This is a **learning project** I made to get better at MERN stack. I experimented with authentication, JWT tokens, rate limiting, protected routes, MongoDB, CRUD, mapping backend data to frontend lists and modular backend architecture.
 
 ---
 
@@ -27,6 +27,7 @@ This is a **learning project** I made to get better at MERN stack. I experimente
   - Environment variables for secrets, URLs, and cookie names  
   - How to protect routes and redirect users if not logged in  
   - Use of HTTP status codes
+  - Modular backend architecture
 
 ---
 
@@ -56,11 +57,17 @@ This is a **learning project** I made to get better at MERN stack. I experimente
    - Make sure the connection URL in your backend `.env` (`MONGO_URL`) is correct.
 
 4. **Start the backend**  
+   - Go to /backend folder.
    ```bash
-   node server.js
+   node ./src/server.js
+   ```
+
 5. **Start the frontend**  
+   - Go to /frontend folder.
    ```bash
    npm run dev
+   ```
+
 6. **Open the app**  
    Open your browser at http://localhost:5173
 
